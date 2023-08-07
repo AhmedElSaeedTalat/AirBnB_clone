@@ -1,5 +1,5 @@
 # Project Description
-This is the first step towards building your first full web application: the AirBnB clone.. 
+This is the first step towards building your first full web application: the AirBnB clone...
 ## Technology Used
 Python
 ## Author
