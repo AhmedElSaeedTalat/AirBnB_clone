@@ -46,5 +46,5 @@ class FileStorage:
         if os.path.exists(self.__file_path):
             with open(self.__file_path, "r") as f:
                 dict1 = json.loads(f.read())
-        for key, obj_dict in dict1.items():
-            self.__objects[key] = BaseModel(**obj_dict)
+            for key, obj_dict in dict1.items():
+                self.__objects[key] = BaseModel(**obj_dict)
