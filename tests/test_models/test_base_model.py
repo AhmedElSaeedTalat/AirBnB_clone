@@ -9,7 +9,10 @@ import datetime
 
 class TestBaseModel(unittest.TestCase):
     """ class to test base class """
+
     def setUp(self):
+        """This method is called before each test method in the test class.
+        """
         self.b = BaseModel()
 
     def test_doc(self):
@@ -53,3 +56,51 @@ class TestBaseModel(unittest.TestCase):
         """ test positional args """
         with self.assertRaises(TypeError):
             self.b.to_dict('str')
+
+        """Unittests for task 4
+        """
+
+    def test_model_from_dict(self):
+        """test instantiation from a dictionary
+        """
+        # Example dictionary with attribute values
+        instance_dict = {
+            '__class__': "BaseModel",
+            'id': '123',
+            'created_at': '2023-08-07T15:30:51.120683',
+            'updated_at': '2023-08-07T15:30:51.120690',
+            'name': 'julien',
+            'my_number': 42
+        }
+        test_instance = BaseModel(**instance_dict)
+        self.assertNotIn("__class__", test_instance.__dict__)
+        self.assertEqual(type(test_instance.id), str)
+        self.assertEqual(type(test_instance.created_at), datetime.datetime)
+        self.assertEqual(type(test_instance.updated_at), datetime.datetime)
+        self.assertEqual(type(test_instance.name), str)
+        self.assertEqual(type(test_instance.my_number), int)
+
+    def init_with_invalid_dates(self):
+        """Test initialization with invalid date strings
+        """
+        # Example dictionary with attribute values
+        invalid_dict = {
+            'id': '123',
+            'created_at': '2021-08-07T15:30:51.120690',
+            'updated_at': '2023-08-07T15:30:51.120690',
+            'name': 'julien',
+            'my_number': 42
+        }
+        # Set invalid date string for created_at
+        invalid_dict['created_at'] = "INVALID DATE"
+        with self.assertRaises(ValueError):
+            inst = BaseModel(**invalid_dict)
+
+        # set invalid updated at:
+        invalid_dict['updated_at'] = 2023
+        with self.assertRaises(TypeError):
+            inst = BaseModel(**invalid_dict)
+
+
+if __name__ == '__main__':
+    unittest.main()
