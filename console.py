@@ -12,23 +12,22 @@ class HBNBCommand(cmd.Cmd):
         """ function to exit the cmd """
         return True
 
+    def do_EOF(self, line):
+        """ function to exit the cmd """
+        print()
+        return True
+
     def help_quit(self):
         """ help guide for quit command """
-        self.stdout.write('Quit command to exit the program\n')
+        print('Quit command to exit the program')
 
     def help_EOF(self):
         """ help guide for EOF command """
-        self.stdout.write('EOF command to exit the program\n')
-
-    def help_help(self):
-        """ displays information about help guide """
-        self.stdout.write("displays information about help guide\n")
+        print('EOF command to exit the program')
 
     def emptyline(self):
         """ handles empty lines """
         pass
-
-    do_EOF = do_quit
 
 
 if __name__ == '__main__':
