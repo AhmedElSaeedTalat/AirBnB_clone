@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ the entry point of the command interpreter """
 import cmd
+import sys
 
 
 class HBNBCommand(cmd.Cmd):
@@ -31,4 +32,8 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    if not sys.stdin.isatty():
+        for line in sys.stdin:
+            HBNBCommand().onecmd(line.strip())
+    else:
+        HBNBCommand().cmdloop()
