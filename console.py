@@ -130,6 +130,46 @@ class HBNBCommand(cmd.Cmd):
                 obj_list.append(inst_dict[key].__str__())
         print(obj_list)
 
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id by adding or
+        updating attribute
+        (save the change into the JSON file).
+        """
+        args = arg.split()
+        if len(args) == 0:
+            print("**class name missing **")
+            return
+        elif args[0] != "BaseModel":
+            print("** class doesn't exist **")
+            return
+        elif len(args) == 1:
+            print("** instance id missing **")
+            return
+        elif len(args) == 2:
+            print("** attribute name missing ")
+            return
+        elif len(args) == 3:
+            print("** value missing **")
+            return
+
+        valid_ids = []
+        id = args[1]
+
+        objects_dict = storage.all()
+
+        for key in objects_dict:
+            class_name, inst_id = key.split(".")
+            valid_ids.append(inst_id)
+            if id in valid_ids:
+                obj = objects_dict[f"{class_name}.{id}"]
+                attr = args[2]
+                value = args[3]
+                setattr(obj, attr, value)
+                storage.save()
+                return
+
+        print("** no instance found ** ")
+
 
 if __name__ == '__main__':
     if not sys.stdin.isatty():
