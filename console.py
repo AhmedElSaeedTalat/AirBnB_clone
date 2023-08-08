@@ -109,6 +109,27 @@ class HBNBCommand(cmd.Cmd):
             del instances_dict["{}.{}".format(args[0], args[1])]
             storage.save()
 
+    def do_all(self, arg):
+        """Prints all string representation of all instances based or not on
+        the class name.
+        Ex: $ all BaseModel or $ all."""
+
+        args = arg.split()
+        if len(args) > 0 and args[0] != "BaseModel":
+            print("** class doesn't exist **")
+            return
+
+        obj_list = []
+
+        inst_dict = storage.all()
+        for key in inst_dict:
+            inst = inst_dict[key]
+
+            if len(args) == 0 or (len(args) > 0 and
+                                  args[0] == inst.__class__.__name__):
+                obj_list.append(inst_dict[key].__str__())
+        print(obj_list)
+
 
 if __name__ == '__main__':
     if not sys.stdin.isatty():
