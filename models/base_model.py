@@ -50,3 +50,4 @@ class BaseModel:
             dict1[key] = value
         dict1['__class__'] = self.__class__.__name__
         return dict1
+

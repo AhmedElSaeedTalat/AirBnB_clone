@@ -12,7 +12,7 @@ from models.review import Review
 from models import storage
 
 
-class HBNBCommand(cmd.Cmd):
+class HBNBCommand(cmd.Cmd, object):
     """ the entry point of the command interpreter """
     # dictionary of all classes
     all_classes = {
@@ -184,6 +184,20 @@ class HBNBCommand(cmd.Cmd):
                 return
 
         print("** no instance found ** ")
+
+    def default(self, arg):
+        """ function to retireve all users """
+
+        arg = arg.split(".")
+        cls_name = arg[0]
+        if arg[0] in HBNBCommand.all_classes:
+            method_name = arg[1]
+            full_method_name = "do_" + method_name.rstrip("()")
+            method = getattr(self, full_method_name)
+            method(cls_name)
+        else:
+            print(f"*** Unknown syntax: {arg[0]}")
+            return
 
 
 if __name__ == '__main__':
