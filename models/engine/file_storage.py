@@ -3,6 +3,8 @@
 import json
 import os
 from datetime import datetime
+from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -41,10 +43,11 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        from models.base_model import BaseModel
         dict1 = {}
         if os.path.exists(self.__file_path):
             with open(self.__file_path, "r") as f:
                 dict1 = json.loads(f.read())
+            """ convert dict to obj and insert them in __objects """
             for key, obj_dict in dict1.items():
-                self.__objects[key] = BaseModel(**obj_dict)
+                cls = globals()[obj_dict['__class__']]
+                self.__objects[key] = cls(**obj_dict)

@@ -3,6 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -11,6 +12,7 @@ class HBNBCommand(cmd.Cmd):
     # dictionary of all classes
     all_classes = {
         "BaseModel",
+        "User",
         "Place",
         "State",
         "City",
@@ -69,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         elif len(args) < 2:
-            print("**instance id missing **")
+            print("** instance id missing **")
             return
 
         class_name = args[0]
@@ -82,16 +84,16 @@ class HBNBCommand(cmd.Cmd):
 
         instances_dict = storage.all()  # get stores objects as dict
         id_list = []
-        for key in instances_dict:
-            # ex output:['BaseModel', '4f834043-3592-407b-8db5-08a22a06e9ab'] :
-            class_name, inst_id = key.split(".")
-            id_list.append(inst_id)
+        """ check if instance exists and if yes it gets printed, otherwise
+            no instance found would be printed
+        """
+        for key, obj in instances_dict.items():
+            name = key.split(".")
+            if obj.id == id and name[0] == class_name:
+                print(obj)
+                return
 
-        if id in id_list:
-            instance = instances_dict[f"{class_name}.{id}"]
-            print(instance.__str__())
-        else:
-            print("** no instance found ** ")
+        print("** no instance found ** ")
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id
@@ -103,11 +105,11 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 1:
             print("** class name missing **")
             return
-        if args[0] != "BaseModel":
+        if args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
-            print("**instance id missing **")
+            print("** instance id missing **")
             return
 
         instances_dict = storage.all()  # get stores objects as dict
@@ -147,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("**class name missing **")
             return
-        elif args[0] != "BaseModel":
+        elif args[0] not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
