@@ -8,6 +8,15 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     """ the entry point of the command interpreter """
+    # dictionary of all classes
+    all_classes = {
+        "BaseModel",
+        "Place",
+        "State",
+        "City",
+        "Amenity",
+        "Review"
+    }
     prompt = "(hbnb) "
 
     def do_quit(self, line):
@@ -42,14 +51,13 @@ class HBNBCommand(cmd.Cmd):
 
         class_name = args[0]
 
-        if class_name != "BaseModel" and \
-                class_name != BaseModel().__class__.__name__:
+        if class_name not in HBNBCommand.all_classes:
             print("** class doesn't exist **")
-            return
-
-        new_inst = BaseModel()
-        new_inst.save()
-        print(new_inst.id)
+        else:
+            cls = globals()[class_name]
+            new_inst = cls()
+            print(new_inst.id)
+            storage.save()
 
     def do_show(self, arg):
         """ Prints the string representation of
@@ -68,7 +76,7 @@ class HBNBCommand(cmd.Cmd):
         cls = globals().get(class_name)  # Get the class by name
         id = args[1]
 
-        if class_name != "BaseModel" and not issubclass(cls, BaseModel):
+        if class_name not in HBNBCommand.all_classes:
             print("** class doesn't exist **")
             return
 
@@ -115,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
         Ex: $ all BaseModel or $ all."""
 
         args = arg.split()
-        if len(args) > 0 and args[0] != "BaseModel":
+        if len(args) > 0 and args[0] not in HBNBCommand.all_classes:
             print("** class doesn't exist **")
             return
 
