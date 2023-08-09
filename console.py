@@ -4,6 +4,11 @@ import cmd
 import sys
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 
 
@@ -105,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 1:
             print("** class name missing **")
             return
-        if args[0] not in ["BaseModel", "User"]:
+        if args[0] not in HBNBCommand.all_classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -149,7 +154,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("**class name missing **")
             return
-        elif args[0] not in ["BaseModel", "User"]:
+        elif args[0] not in HBNBCommand.all_classes:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
