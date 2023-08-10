@@ -226,6 +226,10 @@ class HBNBCommand(cmd.Cmd, object):
                     method(f"{cls_name} {id}")
                 else:
                     method(f"{cls_name}")
+            elif full_method_name == "do_update":
+                regex1 = re.findall(r'[\w-]+', regex.group(2))
+                args = " ".join(regex1)
+                method(f"{cls_name} {args}")
 
         else:
             return super().default(arg)
