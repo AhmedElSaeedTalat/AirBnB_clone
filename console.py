@@ -185,6 +185,17 @@ class HBNBCommand(cmd.Cmd, object):
 
         print("** no instance found ** ")
 
+    def do_count(self, arg):
+        """ count number of instances """
+        count = 0
+        class_name = arg
+        all_instances = storage.all()
+        for key, obj in all_instances.items():
+            name = key.split(".")
+            if name[0] == class_name:
+                count += 1
+        print(count)
+
     def default(self, arg):
         """ function to retireve all users """
 
