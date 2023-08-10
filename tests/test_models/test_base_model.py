@@ -5,6 +5,7 @@ from models.base_model import BaseModel
 import models.base_model
 import inspect
 import datetime
+from time import sleep
 
 
 class TestBaseModel(unittest.TestCase):
@@ -100,6 +101,22 @@ class TestBaseModel(unittest.TestCase):
         invalid_dict['updated_at'] = 2023
         with self.assertRaises(TypeError):
             inst = BaseModel(**invalid_dict)
+
+    def test_str(self):
+        """Testing __str__ method"""
+        self.b.id = "1234"
+        strForm = self.b.__str__()
+        expected = "[BaseModel] (1234)"
+        self.assertIn(expected, strForm)
+
+    def test_save_updatedAt(self):
+        """test updating the public instance attribute updated_at
+            with the current datetime"""
+        new_inst = BaseModel()  # create sleep update
+        sleep(0.05)
+        beforeSave_updated_at = new_inst.updated_at
+        new_inst.save()
+        self.assertLess(beforeSave_updated_at, new_inst.updated_at)
 
 
 if __name__ == '__main__':
