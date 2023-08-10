@@ -2,6 +2,7 @@
 """ the entry point of the command interpreter """
 import cmd
 import sys
+import re
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -199,16 +200,35 @@ class HBNBCommand(cmd.Cmd, object):
     def default(self, arg):
         """ function to retireve all users """
 
-        arg = arg.split(".")
-        cls_name = arg[0]
-        if arg[0] in HBNBCommand.all_classes:
-            method_name = arg[1]
-            full_method_name = "do_" + method_name.rstrip("()")
+        regex = re.match(r"(\w+\.\w+)(.*)", arg)
+        list_command_args = ["do_show", "do_destroy"]
+
+        """ to check if expression matches cls.method()
+            example: User.all() if yes default method would
+            be overritten accordingly """
+        if regex:
+            """ get class name and mehtod to call from passed string
+                using match group and split function """
+            grp1 = regex.group(1)
+            grp1 = grp1.split(".")
+            cls_name = grp1[0]
+            method_name = grp1[1]
+            full_method_name = "do_" + method_name
             method = getattr(self, full_method_name)
-            method(cls_name)
+            if full_method_name in ["do_all", "do_count"]:
+                method(cls_name)
+            elif full_method_name in list_command_args:
+                """ get id as it is needed for this list of commands
+                    if not passed only class name is passed """
+                regex1 = re.match(r'\(\"(.*)\"\)', regex.group(2))
+                if regex1:
+                    id = regex1.group(1)
+                    method(f"{cls_name} {id}")
+                else:
+                    method(f"{cls_name}")
+
         else:
-            print(f"*** Unknown syntax: {arg[0]}")
-            return
+            return super().default(arg)
 
 
 if __name__ == '__main__':
