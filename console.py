@@ -198,7 +198,7 @@ class HBNBCommand(cmd.Cmd, object):
         print(count)
 
     def default(self, arg):
-        """ function to retireve all users """
+        """ overwrite defauls behaviour for commands cls.method() """
 
         regex = re.match(r"(\w+\.\w+)(.*)", arg)
         list_command_args = ["do_show", "do_destroy"]
