@@ -10,6 +10,7 @@ import os
 
 class TestFileStorage(unittest.TestCase):
     """ test file storage class """
+
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """
         self.assertIsNotNone(FileStorage.__doc__, 'no docs for FileStorage')
@@ -39,6 +40,42 @@ class TestFileStorage(unittest.TestCase):
             storage.reload('str')
         with self.assertRaises(TypeError):
             storage.all('str')
+
+    def test_all_return_dict(self):
+        """Test all method that returns the dictionary __objects"""
+        dict_of_obj = FileStorage._FileStorage__objects
+        self.assertIsInstance(dict_of_obj, dict)
+
+    def test_all_dict_of_obj(self):
+        """Test if returns dict of obj"""
+        dict_of_obj = FileStorage._FileStorage__objects
+        for key, obj in dict_of_obj.items():
+            self.assertIsInstance(obj, object)
+
+    def test_new(self):
+        """sets in __objects the obj with key <obj class name>.id"""
+        new_base = BaseModel()
+        self.assertIn("BaseModel." + new_base.id, models.storage.all().keys())
+
+    def test_save(self):
+        """Test serialization of __objects to the JSON file"""
+        # make new obj save it and check key presence in file read
+        base_inst = BaseModel()
+        models.storage.new(base_inst)
+        models.storage.save()
+        text = ""
+        with open("file.json", "r") as f:
+            text = f.read()
+            self.assertIn("BaseModel." + base_inst.id, text)
+
+    def test_reload(self):
+        """Test Deserialization the JSON file to __objects dict"""
+        base_inst = BaseModel()
+        models.storage.new(base_inst)
+        models.storage.save()
+        models.storage.reload()
+        dict_of_obj = FileStorage._FileStorage__objects
+        self.assertIn(f"BaseModel." + base_inst.id, dict_of_obj)
 
 
 if __name__ == "__main__":
