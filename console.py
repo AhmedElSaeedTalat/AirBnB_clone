@@ -12,8 +12,10 @@ from models.amenity import Amenity
 from models.review import Review
 from models import storage
 
+# remove object from class HBNBCommand(cmd.Cmd):
 
-class HBNBCommand(cmd.Cmd, object):
+
+class HBNBCommand(cmd.Cmd):
     """ the entry point of the command interpreter """
     # dictionary of all classes
     all_classes = {
@@ -30,6 +32,7 @@ class HBNBCommand(cmd.Cmd, object):
     def do_quit(self, line):
         """ function to exit the cmd """
         return True
+# quit and EOF to exit the program, no printing
 
     def do_EOF(self, line):
         """ function to exit the cmd """
