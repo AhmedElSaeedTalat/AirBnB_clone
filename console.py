@@ -244,9 +244,22 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     method(f"{cls_name}")
             elif full_method_name == "do_update":
-                regex1 = re.findall(r'[\w-]+', regex.group(2))
-                args = " ".join(regex1)
-                method(f"{cls_name} {args}")
+                regex1 = re.findall(r'[\w\-\@\.]+', regex.group(2))
+                if len(regex1) == 3:
+                    args = " ".join(regex1)
+                    method(f"{cls_name} {args}")
+                elif len(regex1) > 3:
+                    new_list = []
+                    new_list.append(regex1[0])
+                    for i, arg in enumerate(regex1):
+                        if i == 0:
+                            continue
+                        new_list.append(arg)
+                        if i % 2 == 0:
+                            args = " ".join(new_list)
+                            method(f"{cls_name} {args}")
+                            new_list = []
+                            new_list.append(regex1[0])
 
         else:
             return super().default(arg)
