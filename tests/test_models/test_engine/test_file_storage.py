@@ -31,7 +31,7 @@ class TestFileStorage(unittest.TestCase):
         all_objs = storage.all()
         for obj_id in all_objs.keys():
             obj = all_objs[obj_id]
-            self.assertEqual(type(obj), BaseModel)
+            self.assertTrue(isinstance(obj, BaseModel))
 
         """ adding positional args """
         with self.assertRaises(TypeError):
