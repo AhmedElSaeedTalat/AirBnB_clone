@@ -42,11 +42,18 @@ class TestUser(unittest.TestCase):
 
     def test_to_dict_city(self):
         """ test User.to_dict() """
-        self.c.first_name = "stones"
+        self.c.first_name = "jonas"
+        self.c.last_name = "stones"
+        self.c.email = "jonas@example.com"
+        self.c.password = "root"
         dict1 = self.c.to_dict()
 
         """ confirming the type of each attr in dict """
         self.assertEqual(type(dict1['first_name']), str)
+        self.assertEqual(dict1['first_name'], "jonas")
+        self.assertEqual(dict1['last_name'], "stones")
+        self.assertEqual(dict1['email'], "jonas@example.com")
+        self.assertEqual(dict1['password'], "root")
         self.assertEqual(type(dict1['__class__']), str)
         self.assertEqual(dict1['__class__'], "User")
         self.assertEqual(type(dict1['updated_at']), str)
