@@ -55,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it (to the JSON file)
         """
-        args = arg.split()
+        args = shlex.split(arg)
 
         if len(args) < 1:
             print("** class name missing **")
@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
         """ Prints the string representation of
         an instance based on the class name and id
         Example: show BaseModel 49faff9a-6318-451f-87b6-910505c55907"""
-        args = arg.split()
+        args = shlex.split(arg)
 
         if len(args) < 1:
             print("** class name missing **")
@@ -110,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
         (save the change into the JSON file).
         Ex: $ destroy BaseModel 1234-1234-1234."""
 
-        args = arg.split()
+        args = shlex.split(arg)
 
         if len(args) < 1:
             print("** class name missing **")
@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
         the class name.
         Ex: $ all BaseModel or $ all."""
 
-        args = arg.split()
+        args = shlex.split(arg)
         if len(args) > 0 and args[0] not in HBNBCommand.all_classes:
             print("** class doesn't exist **")
             return
