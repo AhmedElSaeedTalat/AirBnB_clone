@@ -52,6 +52,12 @@ class HBNBCommand(cmd.Cmd):
         """ handles empty lines """
         pass
 
+# add do_help
+
+    def do_help(self, line):
+        """overrides help method"""
+        cmd.Cmd.do_help(self, line)
+
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it (to the JSON file)
         """
@@ -100,10 +106,13 @@ class HBNBCommand(cmd.Cmd):
         for key, obj in instances_dict.items():
             name = key.split(".")
             if obj.id == id and name[0] == class_name:
-                print(obj)
-                return
+                try:
+                    print(obj)
+                    return
+                except KeyError:
+                    print("** no instance found **")
 
-        print("** no instance found ** ")
+        print("** no instance found **")
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id
@@ -122,12 +131,12 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-        instances_dict = storage.all()  # get stores objects as dict
-        if "{}.{}".format(args[0], args[1]) not in instances_dict.keys():
-            print("** no instance found **")
-        else:
+        try:
+            instances_dict = storage.all()  # get stores objects as dict
             del instances_dict["{}.{}".format(args[0], args[1])]
             storage.save()
+        except KeyError:
+            print("** no instance found **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances based or not on
@@ -157,7 +166,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args = shlex.split(arg)
         if len(args) == 0:
-            print("**class name missing **")
+            print("** class name missing **")
             return
         elif args[0] not in HBNBCommand.all_classes:
             print("** class doesn't exist **")
@@ -175,20 +184,21 @@ class HBNBCommand(cmd.Cmd):
         valid_ids = []
         id = args[1]
 
-        objects_dict = storage.all()
+        try:
 
-        for key in objects_dict:
-            class_name, inst_id = key.split(".")
-            valid_ids.append(inst_id)
-            if id in valid_ids:
-                obj = objects_dict[f"{class_name}.{id}"]
-                attr = args[2]
-                value = args[3]
-                setattr(obj, attr, value)
-                storage.save()
-                return
-
-        print("** no instance found ** ")
+            objects_dict = storage.all()
+            for key in objects_dict:
+                class_name, inst_id = key.split(".")
+                valid_ids.append(inst_id)
+                if id in valid_ids:
+                    obj = objects_dict[f"{class_name}.{id}"]
+                    attr = args[2]
+                    value = args[3]
+                    setattr(obj, attr, value)
+                    storage.save()
+                    return
+        except KeyError:
+            print("** no instance found **")
 
     def do_count(self, arg):
         """ count number of instances """
