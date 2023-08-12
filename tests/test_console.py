@@ -7,6 +7,13 @@ import console
 from unittest.mock import patch
 from io import StringIO
 from models import storage
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class TestConsole(unittest.TestCase):
@@ -59,6 +66,150 @@ class TestCreate(unittest.TestCase):
             inst_key = "BaseModel.{}".format(captured_id)
             input = "create BaseModel"
             self.assertIn(inst_key, storage.all().keys())
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = "create User"  # input
+            HBNBCommand().onecmd(input)  # excute command
+            captured_id = output.getvalue().strip()
+
+            inst_key = "User.{}".format(captured_id)
+            input = "create User"
+            self.assertIn(inst_key, storage.all().keys())
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = "create Amenity"  # input
+            HBNBCommand().onecmd(input)  # excute command
+            captured_id = output.getvalue().strip()
+
+            inst_key = "Amenity.{}".format(captured_id)
+            input = "create Amenity"
+            self.assertIn(inst_key, storage.all().keys())
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = "create State"  # input
+            HBNBCommand().onecmd(input)  # excute command
+            captured_id = output.getvalue().strip()
+
+            inst_key = "State.{}".format(captured_id)
+            input = "create State"
+            self.assertIn(inst_key, storage.all().keys())
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = "create Place"  # input
+            HBNBCommand().onecmd(input)  # excute command
+            captured_id = output.getvalue().strip()
+
+            inst_key = "Place.{}".format(captured_id)
+            input = "create Place"
+            self.assertIn(inst_key, storage.all().keys())
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = "create City"  # input
+            HBNBCommand().onecmd(input)  # excute command
+            captured_id = output.getvalue().strip()
+
+            inst_key = "City.{}".format(captured_id)
+            input = "create City"
+            self.assertIn(inst_key, storage.all().keys())
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = "create Review"  # input
+            HBNBCommand().onecmd(input)  # excute command
+            captured_id = output.getvalue().strip()
+
+            inst_key = "Review.{}".format(captured_id)
+            self.assertIn(inst_key, storage.all().keys())
+
+
+class TestShow(unittest.TestCase):
+    """ """
+    def test_show(self):
+        """ test show """
+        b = BaseModel()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'BaseModel.show("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = f"[BaseModel] ({id}) {b.__dict__}"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        b = User()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'User.show("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = f"[User] ({id}) {b.__dict__}"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        b = State()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'State.show("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = f"[State] ({id}) {b.__dict__}"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        b = City()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'City.show("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = f"[City] ({id}) {b.__dict__}"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        b = Place()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'Place.show("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = f"[Place] ({id}) {b.__dict__}"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        b = Amenity()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'Amenity.show("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = f"[Amenity] ({id}) {b.__dict__}"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        b = Review()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'Review.show("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = f"[Review] ({id}) {b.__dict__}"
+            self.assertEqual(output.getvalue().strip(), res)
+
+    def test_errors(self):
+        """ test passing invalid id """
+        invalid_id = 23421123
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'BaseModel.show("{invalid_id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** no instance found **"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        """ test passing no class """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'show'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** class name missing **"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        """ test passing incorrect class """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'places.show("232342")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** class doesn't exist **"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        """ test passing not passing id """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Place.show()'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** instance id missing **"
+            self.assertEqual(output.getvalue().strip(), res)
 
 
 if __name__ == '__main__':
