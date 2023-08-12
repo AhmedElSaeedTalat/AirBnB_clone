@@ -14,6 +14,7 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+import json
 
 
 class TestConsole(unittest.TestCase):
@@ -122,7 +123,7 @@ class TestCreate(unittest.TestCase):
 
 
 class TestShow(unittest.TestCase):
-    """ """
+    """ test show feature"""
     def test_show(self):
         """ test show """
         b = BaseModel()
@@ -225,6 +226,83 @@ class TestCount(unittest.TestCase):
             input = 'BaseModel.count()'
             HBNBCommand().onecmd(input)
             self.assertEqual(output.getvalue().strip(), str(count))
+
+
+class TestAll(unittest.TestCase):
+    """ test all funtion """
+    def test_all(self):
+        """test all function """
+        b = BaseModel()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'BaseModel.all()'
+            HBNBCommand().onecmd(input)
+            list_obj = json.loads(output.getvalue())
+            for obj in list_obj:
+                obj = obj.split()
+                self.assertEqual(obj[0], "[BaseModel]")
+
+        b = User()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'User.all()'
+            HBNBCommand().onecmd(input)
+            list_obj = json.loads(output.getvalue())
+            for obj in list_obj:
+                obj = obj.split()
+                self.assertEqual(obj[0], "[User]")
+
+        b = State()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'State.all()'
+            HBNBCommand().onecmd(input)
+            list_obj = json.loads(output.getvalue())
+            for obj in list_obj:
+                obj = obj.split()
+                self.assertEqual(obj[0], "[State]")
+
+        b = City()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'City.all()'
+            HBNBCommand().onecmd(input)
+            list_obj = json.loads(output.getvalue())
+            for obj in list_obj:
+                obj = obj.split()
+                self.assertEqual(obj[0], "[City]")
+
+        b = Amenity()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Amenity.all()'
+            HBNBCommand().onecmd(input)
+            list_obj = json.loads(output.getvalue())
+            for obj in list_obj:
+                obj = obj.split()
+                self.assertEqual(obj[0], "[Amenity]")
+
+        b = Place()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Place.all()'
+            HBNBCommand().onecmd(input)
+            list_obj = json.loads(output.getvalue())
+            for obj in list_obj:
+                obj = obj.split()
+                self.assertEqual(obj[0], "[Place]")
+
+        b = Review()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Review.all()'
+            HBNBCommand().onecmd(input)
+            list_obj = json.loads(output.getvalue())
+            for obj in list_obj:
+                obj = obj.split()
+                self.assertEqual(obj[0], "[Review]")
+
+    def test_invalidClass(self):
+        """ test invalid calss """
+        b = Review()
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'review.all()'
+            HBNBCommand().onecmd(input)
+            expected_output = "** class doesn't exist **"
+            self.assertEqual(output.getvalue().strip(), expected_output)
 
 
 if __name__ == '__main__':
