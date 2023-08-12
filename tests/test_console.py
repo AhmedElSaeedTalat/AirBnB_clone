@@ -212,5 +212,20 @@ class TestShow(unittest.TestCase):
             self.assertEqual(output.getvalue().strip(), res)
 
 
+class TestCount(unittest.TestCase):
+    """ test count """
+    def test_count(self):
+        """ test count function """
+        count = 0
+        for key, values in storage.all().items():
+            name = key.split(".")
+            if name[0] == 'BaseModel':
+                count += 1
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'BaseModel.count()'
+            HBNBCommand().onecmd(input)
+            self.assertEqual(output.getvalue().strip(), str(count))
+
+
 if __name__ == '__main__':
     unittest.main()
