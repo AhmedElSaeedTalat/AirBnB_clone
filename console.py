@@ -197,6 +197,9 @@ class HBNBCommand(cmd.Cmd):
                     setattr(obj, attr, value)
                     storage.save()
                     return
+            print("** no instance found **")
+            return
+
         except KeyError:
             print("** no instance found **")
 
