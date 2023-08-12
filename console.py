@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ the entry point of the command interpreter """
 import cmd
+import shlex
 import sys
 import re
 from models.base_model import BaseModel
@@ -154,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
         updating attribute
         (save the change into the JSON file).
         """
-        args = arg.split()
+        args = shlex.split(arg)
         if len(args) == 0:
             print("**class name missing **")
             return
