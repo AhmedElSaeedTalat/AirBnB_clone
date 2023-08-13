@@ -395,5 +395,106 @@ class TestDestroy(unittest.TestCase):
             self.assertNotIn(id, list_keys)
 
 
+class TestUpdate(unittest.TestCase):
+    """ test update """
+    def test_update(self):
+        """ test update function """
+        b = BaseModel()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update BaseModel {id} name base1'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "base1")
+
+        b = User()
+        id = b.id
+        b.first_name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update User {id} first_name John'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.first_name, "John")
+
+        b = State()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update User {id} name NYC'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "NYC")
+
+        b = City()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update User {id} name NYC'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "NYC")
+
+        b = Place()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update Place {id} name NYC'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "NYC")
+
+        b = Amenity()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update Amenity {id} name NYC'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "NYC")
+
+        b = Review()
+        id = b.id
+        b.text = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update Place {id} text NYC'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.text, "NYC")
+
+    def test_update_errors(self):
+        """ test errors for update function """
+        b = BaseModel()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update BaseModel 123112 name base1'
+            HBNBCommand().onecmd(input)  # excute command
+            expected_output = "** no instance found **"
+            self.assertEqual(output.getvalue().strip(), expected_output)
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update BaseModel'
+            HBNBCommand().onecmd(input)  # excute command
+            expected_output = "** instance id missing **"
+            self.assertEqual(output.getvalue().strip(), expected_output)
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update base {b.id} name base1'
+            HBNBCommand().onecmd(input)  # excute command
+            expected_output = "** class doesn't exist **"
+            self.assertEqual(output.getvalue().strip(), expected_output)
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update'
+            HBNBCommand().onecmd(input)  # excute command
+            expected_output = "** class name missing **"
+            self.assertEqual(output.getvalue().strip(), expected_output)
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update BaseModel {b.id}'
+            HBNBCommand().onecmd(input)  # excute command
+            expected_output = "** attribute name missing **"
+            self.assertEqual(output.getvalue().strip(), expected_output)
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update BaseModel {b.id} name'
+            HBNBCommand().onecmd(input)  # excute command
+            expected_output = "** value missing **"
+            self.assertEqual(output.getvalue().strip(), expected_output)
+
+
 if __name__ == '__main__':
     unittest.main()
