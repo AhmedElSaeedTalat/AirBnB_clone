@@ -30,6 +30,10 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(User, "last_name"))
         self.assertTrue(hasattr(User, "password"))
         self.assertTrue(hasattr(User, "email"))
+        self.assertEqual(type(User.email), str)
+        self.assertEqual(type(User.first_name), str)
+        self.assertEqual(type(User.last_name), str)
+        self.assertEqual(type(User.password), str)
 
     def test_init_user(self):
         """ test instantiation of class """
