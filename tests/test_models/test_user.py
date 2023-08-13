@@ -24,6 +24,13 @@ class TestUser(unittest.TestCase):
         for name, method in inspect.getmembers(User, inspect.isfunction):
             self.assertIsNotNone(method.__doc__, f"{name} has no docs")
 
+    def check_attributes(self):
+        """ check for attributes """
+        self.assertTrue(hasattr(User, "first_name"))
+        self.assertTrue(hasattr(User, "last_name"))
+        self.assertTrue(hasattr(User, "password"))
+        self.assertTrue(hasattr(User, "email"))
+
     def test_init_user(self):
         """ test instantiation of class """
         self.assertEqual(type(self.c.id), str)
