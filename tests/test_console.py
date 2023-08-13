@@ -305,5 +305,95 @@ class TestAll(unittest.TestCase):
             self.assertEqual(output.getvalue().strip(), expected_output)
 
 
+class TestDestroy(unittest.TestCase):
+    """ test destroy function"""
+    def test_invalidId(self):
+        """ test invalid id """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'BaseModel.destroy("232342")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** no instance found **"
+            self.assertEqual(output.getvalue().strip(), res)
+
+    def test_destroy(self):
+        """ test destroy function """
+        b = BaseModel()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'BaseModel.destroy("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            instances = storage.all()
+            list_keys = []
+            for key, obj in instances.items():
+                list_keys.append(key)
+            self.assertNotIn(id, list_keys)
+
+        b = User()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'User.destroy("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            instances = storage.all()
+            list_keys = []
+            for key, obj in instances.items():
+                list_keys.append(key)
+            self.assertNotIn(id, list_keys)
+
+        b = State()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'State.destroy("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            instances = storage.all()
+            list_keys = []
+            for key, obj in instances.items():
+                list_keys.append(key)
+            self.assertNotIn(id, list_keys)
+
+        b = City()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'City.destroy("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            instances = storage.all()
+            list_keys = []
+            for key, obj in instances.items():
+                list_keys.append(key)
+            self.assertNotIn(id, list_keys)
+
+        b = Place()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Place.destroy("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            instances = storage.all()
+            list_keys = []
+            for key, obj in instances.items():
+                list_keys.append(key)
+            self.assertNotIn(id, list_keys)
+
+        b = Amenity()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Amenity.destroy("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            instances = storage.all()
+            list_keys = []
+            for key, obj in instances.items():
+                list_keys.append(key)
+            self.assertNotIn(id, list_keys)
+
+        b = Review()
+        id = b.id
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Review.destroy("{id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            instances = storage.all()
+            list_keys = []
+            for key, obj in instances.items():
+                list_keys.append(key)
+            self.assertNotIn(id, list_keys)
+
+
 if __name__ == '__main__':
     unittest.main()
