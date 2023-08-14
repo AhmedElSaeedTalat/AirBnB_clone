@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+
 """ test console """
 import unittest
 import inspect
@@ -401,9 +401,17 @@ class TestUpdate(unittest.TestCase):
         """ test update function """
         b = BaseModel()
         id = b.id
+        b.name = "Juliet"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'update BaseModel{id} name Juliet)'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "Juliet")
+
+        b = BaseModel()
+        id = b.id
         b.name = "betty"
         with patch("sys.stdout", new=StringIO()) as output:
-            input = f'update BaseModel {id} name base1'
+            input = f'BaseModel.update("{id}", "name", "base1")'
             HBNBCommand().onecmd(input)  # excute command
             self.assertEqual(b.name, "base1")
 
@@ -411,7 +419,7 @@ class TestUpdate(unittest.TestCase):
         id = b.id
         b.first_name = "betty"
         with patch("sys.stdout", new=StringIO()) as output:
-            input = f'update User {id} first_name John'
+            input = f'User.update("{id}", "first_name", "John")'
             HBNBCommand().onecmd(input)  # excute command
             self.assertEqual(b.first_name, "John")
 
@@ -419,7 +427,7 @@ class TestUpdate(unittest.TestCase):
         id = b.id
         b.name = "betty"
         with patch("sys.stdout", new=StringIO()) as output:
-            input = f'update User {id} name NYC'
+            input = f'State.update("{id}", "name", "NYC")'
             HBNBCommand().onecmd(input)  # excute command
             self.assertEqual(b.name, "NYC")
 
@@ -427,7 +435,7 @@ class TestUpdate(unittest.TestCase):
         id = b.id
         b.name = "betty"
         with patch("sys.stdout", new=StringIO()) as output:
-            input = f'update User {id} name NYC'
+            input = f'City.update("{id}", "name", "NYC")'
             HBNBCommand().onecmd(input)  # excute command
             self.assertEqual(b.name, "NYC")
 
@@ -435,7 +443,7 @@ class TestUpdate(unittest.TestCase):
         id = b.id
         b.name = "betty"
         with patch("sys.stdout", new=StringIO()) as output:
-            input = f'update Place {id} name NYC'
+            input = f'Place.update("{id}", "name", "NYC")'
             HBNBCommand().onecmd(input)  # excute command
             self.assertEqual(b.name, "NYC")
 
@@ -443,7 +451,7 @@ class TestUpdate(unittest.TestCase):
         id = b.id
         b.name = "betty"
         with patch("sys.stdout", new=StringIO()) as output:
-            input = f'update Amenity {id} name NYC'
+            input = f'Amenity.update("{id}", "name", "NYC")'
             HBNBCommand().onecmd(input)  # excute command
             self.assertEqual(b.name, "NYC")
 
@@ -451,9 +459,65 @@ class TestUpdate(unittest.TestCase):
         id = b.id
         b.text = "betty"
         with patch("sys.stdout", new=StringIO()) as output:
-            input = f'update Place {id} text NYC'
+            input = f'Review.update("{id}" ,"text", "NYC")'
             HBNBCommand().onecmd(input)  # excute command
             self.assertEqual(b.text, "NYC")
+
+        b = BaseModel()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'BaseModel.update("{id}", {{ "name": "value" }})'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "value")
+
+        b = User()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'User.update("{id}", {{ "name": "value" }})'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "value")
+
+        b = State()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'State.update("{id}", {{ "name": "value" }})'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "value")
+
+        b = City()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'City.update("{id}", {{ "name": "value" }})'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "value")
+
+        b = Place()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'Place.update("{id}", {{ "name": "value" }})'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "value")
+
+        b = Review()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'Review.update("{id}", {{ "name": "value" }})'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "value")
+
+        b = Amenity()
+        id = b.id
+        b.name = "betty"
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'Amenity.update("{id}", {{ "name": "value" }})'
+            HBNBCommand().onecmd(input)  # excute command
+            self.assertEqual(b.name, "value")
 
     def test_update_errors(self):
         """ test errors for update function """
