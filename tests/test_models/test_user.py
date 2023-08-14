@@ -26,6 +26,15 @@ class TestUser(unittest.TestCase):
 
     def check_attributes(self):
         """ check for attributes """
+        user = User()
+        user.first_name = "Jonas"
+        user.last_name = "stones"
+        user.email = "jonas@email.com"
+        user.password = "root"
+        self.assertEqual(user.first_name, "Jonas")
+        self.assertEqual(user.last_name, "stones")
+        self.assertEqual(user.email, "jonas@email.com")
+        self.assertEqual(user.password, "root")
         self.assertTrue(hasattr(User, "first_name"))
         self.assertTrue(hasattr(User, "last_name"))
         self.assertTrue(hasattr(User, "password"))
