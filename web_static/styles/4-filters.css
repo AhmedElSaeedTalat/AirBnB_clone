@@ -1,0 +1,38 @@
+/*
+font size: 18px
+background color #FF5A5F
+text color #FFFFFF
+height: 48px
+width: 20% of the section filters
+no borders
+border radius: 4px
+center vertically and at 30px of the right border
+change opacity to 90% when the mouse is on the button
+*/
+
+.filters {
+	color: white;
+	height: 70px;
+	width: 100%;
+	border: solid 1px #DDDDDD;
+	border-radius: 4px;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.filters button {
+	font-size: 18px;
+	background-color: #FF5A5F;
+	color: #FFFFFF;
+	height: 48px;
+	width: 20%;
+	border: none;
+	border-radius: 4px;
+	position: absolute;
+	right: 30px;
+}
+
+.filters button:hover {
+	opacity: 90%;
+}

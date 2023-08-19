@@ -1,0 +1,10 @@
+/* max width 1000px
+margin top and bottom 30px - it should be 30px under the bottom of
+the header (screenshot)
+center horizontally */
+.container {
+
+	max-width: 1000px;
+	margin: 0 auto;
+	margin-top: 30px;
+}
