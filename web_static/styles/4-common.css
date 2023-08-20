@@ -9,6 +9,7 @@ body {
 	font-size: 14px;
 	font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	list-style: none;
+	box-sizing: border-box;
 
 }
 
@@ -17,4 +18,8 @@ body {
 	max-width: 1000px;
 	margin: 0 auto;
 	margin-top: 30px;
+}
+
+section {
+	padding: 0.2rem 0.2rem;
 }

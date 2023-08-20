@@ -5,21 +5,16 @@ section.places h1 {
 
 
 section.places {
-	width: 100%;
+	max-width: 1100px;
+	margin: 20px auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
 }
 
-.art-cont {
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-}
 
-section.places .art-cont>article {
+section.places article {
 	max-width: 390px;
-	min-width: 200px;
-	width: 100%;
-	max-height: 45vh;
 	padding: 20px;
 	margin: 20px;
 	line-height: 1.2rem;
@@ -30,12 +25,10 @@ section.places .art-cont>article {
 article h2 {
 	text-align: center;
 	font-size: 30px;
-	line-height: 2rem;
+	line-height: 2.2rem;
 }
 
-section.places h1 {
-	margin-bottom: 2rem;
-}
+
 
 @media all and (max-width: 700px) {
 
