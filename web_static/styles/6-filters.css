@@ -55,37 +55,35 @@ ul.popover {
 	border: solid 1px #DDDDDD;
 	border-radius: 4px;
 	margin-top: -1%;
+	z-index: 1;
+}
+
+ul.inner {
+	position: absolute;
+	right: 70%;
+	min-width: 70%;
+	text-align: center;
+	z-index: 2;
+	background-color: white;
 }
 
 ul.popover li {
 	color: #FAFAFA;
+	font-size: 14px;
+	font-weight: normal;
 	width: 100%;
 	list-style: none;
 	color: black;
 	margin-left: -1.2rem;
-	padding: 0.8rem 0;
+	padding: 0.6rem 0;
 }
 
 .locations:hover ul.locations-pop {
 	display: block;
 }
 
-ul.popover {
-	display: none;
-	border: solid 1px #DDDDDD;
-	border-radius: 4px;
-	margin-top: -1%;
-}
-
 h2 .ulcontainer {
 	position: relative;
-}
-
-ul.inner {
-	position: absolute;
-	right: 100%;
-	min-width: 100%;
-	text-align: center;
 }
 
 /* Show inner list when hovering over h2 */
@@ -103,8 +101,6 @@ ul.inner {
 ul.locations-pop {
 	position: relative;
 }
-
-
 
 
 
