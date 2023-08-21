@@ -1,4 +1,4 @@
-body, html {
+html, body {
 	height: 100%;
 }
 body {
@@ -7,6 +7,11 @@ body {
 	color: #484848;
 	font-size: 14px;
 	font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
-	display: flex;
-	flex-direction: column;
+
+}
+
+.container {
+		max-width: 1000px;
+		margin: 30px auto;
+		min-height: 100%;
 }

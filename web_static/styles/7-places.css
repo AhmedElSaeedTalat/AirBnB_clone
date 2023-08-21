@@ -1,0 +1,28 @@
+.places {
+	display: grid;
+	grid-template-areas: 
+	"t t t t"
+	"b b r r"
+	"l l l l"
+}
+.places h1 {
+	font-size: 30px;
+	grid-area: t;
+}
+.places article {
+	width: 390px;
+	padding: 20px;
+	margin: 20px;
+	border: solid 1px #FF5A5F;
+	border-radius: 4px;
+	text-align: center;
+}
+.places article:nth-child(2) {
+	grid-area: b;
+}
+.places article:nth-child(3) {
+	grid-area: r;
+}
+.places article:nth-child(4) {
+	grid-area: l;
+}
