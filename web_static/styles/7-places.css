@@ -5,6 +5,13 @@
 	"b b r r"
 	"l l l l"
 }
+@media (max-width: 768px) {
+  .places {
+   	display: flex;
+    	justify-content: center;
+    	flex-wrap: wrap;
+}
+}
 .places h1 {
 	font-size: 30px;
 	grid-area: t;
